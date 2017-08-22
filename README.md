@@ -8,7 +8,8 @@
 
 ## Install
 
-1. `bash install.sh`
+1. `bash bin/install.sh` - create env via workon
+1. `. bin/install_db.sh` - create database
 
 ## Run server
 

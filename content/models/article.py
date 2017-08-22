@@ -1,14 +1,16 @@
 import sqlalchemy as sa
 
+from .user import User
+
 meta = sa.MetaData()
 
 Article = sa.Table(
-    'comment', meta,
+    'article', meta,
     sa.Column('id', sa.Integer, nullable=False),
     sa.Column('title', sa.String(200), nullable=False),
     sa.Column('text', sa.Text, nullable=False),
-    sa.Column('user_id', sa.Integer, sa.ForeignKey("user.user_id"), nullable=False),
+    sa.Column('user_id', sa.Integer, sa.ForeignKey(User.c.id), nullable=False),
 
     # Indexes #
-    sa.PrimaryKeyConstraint('id', name='question_id_pkey')
+    sa.PrimaryKeyConstraint('id', name='article_id_pkey')
 )

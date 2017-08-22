@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # determine os
-source ../env/database.sh
+source ./env/database.sh
 
 echo "Import env from config/base.yml"
 

@@ -8,5 +8,5 @@ User = sa.Table(
     sa.Column('name', sa.String(200), nullable=False),
 
     # Indexes #
-    sa.PrimaryKeyConstraint('id', name='question_id_pkey')
+    sa.PrimaryKeyConstraint('id', name='user_id_pkey')
 )

@@ -4,7 +4,7 @@ aiohttp-devtools==0.5
 aiohttp-jinja2==0.13.0
 aiohttp-transmute==1.1.0
 aiopg==0.13.0
-alembic==0.8.6
+alembic==0.9.5
 argh==0.26.2
 async-timeout==1.2.1
 certifi==2017.4.17
