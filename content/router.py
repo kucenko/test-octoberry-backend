@@ -1,0 +1,26 @@
+import aiohttp_transmute
+
+from aiohttp import web
+
+from config.base import init_pg, close_pg
+
+from . import views
+
+
+content_api_app = web.Application()
+
+
+content_api_app.on_startup.append(init_pg)
+content_api_app.on_cleanup.append(close_pg)
+
+
+def setup_routes(app):
+    aiohttp_transmute.route(content_api_app, views.ping_get_view)
+
+    content_api_app.router.add_get(
+        '/doc/swagger.json',
+        aiohttp_transmute.create_swagger_json_handler(content_api_app, base_path='/api')
+    )
+    aiohttp_transmute.add_swagger_api_route(content_api_app, '/doc', '/api/doc/swagger.json')
+
+    app.add_subapp('/api', content_api_app)
