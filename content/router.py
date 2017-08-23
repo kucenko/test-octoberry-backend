@@ -4,7 +4,7 @@ from aiohttp import web
 
 from config.base import init_pg, close_pg
 
-from . import views
+from .views import route_views
 
 
 content_api_app = web.Application()
@@ -15,7 +15,8 @@ content_api_app.on_cleanup.append(close_pg)
 
 
 def setup_routes(app):
-    aiohttp_transmute.route(content_api_app, views.ping_get_view)
+    for view in route_views:
+        aiohttp_transmute.route(content_api_app, view)
 
     content_api_app.router.add_get(
         '/doc/swagger.json',
