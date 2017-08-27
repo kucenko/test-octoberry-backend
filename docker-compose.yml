@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=octoberry_production
+      - DATABASE_USERNAME=octoberry
+      - DATABASE_PASSWORD=octoberry
+  web-api:
+    build: .
+    command: gunicorn -w 4 main:app --bind 0.0.0.0:8000 --worker-class aiohttp.worker.GunicornWebWorker
+    volumes:
+      - .:/code
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=octoberry_production
+      - DATABASE_USERNAME=octoberry
+      - DATABASE_PASSWORD=octoberry

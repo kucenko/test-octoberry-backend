@@ -1,15 +1,19 @@
 #!/bin/bash
 
 # determine os
-source ./env/database.sh
+if [ -z "$DATABASE_NAME" ]; then
+    echo "Source ./env/database.sh"
+    source ./env/database.sh
+fi
 
-echo "Import env from config/base.yml"
+# unameOut="$(uname -s)"
+# case "${unameOut}" in
+#     Darwin*)    pg_cmd="psql -U postgres";;
+#     *)          pg_cmd="sudo -u postgres psql -h ${DATABASE_HOST}"
+# esac
 
-unameOut="$(uname -s)"
-case "${unameOut}" in
-    Darwin*)    pg_cmd="psql -U postgres";;
-    *)          pg_cmd="sudo -u postgres psql -h ${DATABASE_HOST}"
-esac
+pg_cmd="psql -U postgres -h ${DATABASE_HOST} -w postgres"
+
 
 ${pg_cmd} -c "DROP DATABASE IF EXISTS ${DATABASE_NAME}"
 ${pg_cmd} -c "DROP ROLE IF EXISTS ${DATABASE_USERNAME}"

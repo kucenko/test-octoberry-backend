@@ -15,11 +15,11 @@ async def init_pg(app):
     db_config = config['postgres']
 
     engine = await create_engine(
-        database=db_config['database'],
-        user=db_config['user'],
-        password=db_config['password'],
-        host=db_config['host'],
-        port=db_config['port'],
+        database=os.getenv('DATABASE_NAME', db_config['database']),
+        user=os.getenv('DATABASE_USERNAME', db_config['user']),
+        password=os.getenv('DATABASE_PASSWORD', db_config['password']),
+        host=os.getenv('DATABASE_HOST', db_config['host']),
+        port=os.getenv('DATABASE_PORT', db_config['port']),
         minsize=db_config['minsize'],
         maxsize=db_config['maxsize']
     )
