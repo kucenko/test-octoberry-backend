@@ -59,7 +59,7 @@ async def comment_edit_view(request, text: str, comment_id: int) -> CommentSeria
 
     async with request.app['db'].acquire() as conn:
         await conn.execute(
-            Comment.update().values(text=text).where(User.c.id == comment_id)
+            Comment.update().values(text=text).where(Comment.c.id == comment_id)
         )
 
         return await get_record_by_id(conn, Comment, comment_id)

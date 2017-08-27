@@ -5,7 +5,7 @@ from sqlalchemy.sql.expression import select
 from schematics.types import ListType, ModelType
 
 
-from .helpers import get_record_by_id
+from .helpers import get_record_by_id, fetch_one_or_404
 from ..serializers import ArticleDetailSerializer
 from ..models import Article, User, Comment
 
@@ -44,7 +44,7 @@ async def article_get_view(request, article_id: int) -> ArticleDetailSerializer:
 
     async with request.app['db'].acquire() as conn:
         result = await conn.execute(ARTICLE_SELECT.where(Article.c.id == article_id))
-        article = await result.fetchone()
+        article = await fetch_one_or_404(result)
 
         result = await conn.execute(
             COMMENT_SELECT.where(Comment.c.article_id == article_id)

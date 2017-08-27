@@ -1,5 +1,6 @@
 import math
 
+from aiohttp.web import HTTPNotFound
 from sqlalchemy import func
 
 
@@ -28,3 +29,12 @@ async def get_paginated_records(conn, query, page, model):
         "data": records,
         "pagination": pagination
     }
+
+
+async def fetch_one_or_404(model):
+    res = await model.fetchone()
+
+    if not res:
+        raise HTTPNotFound()
+
+    return res
