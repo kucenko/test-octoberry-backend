@@ -5,7 +5,7 @@ import sys
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), '..')))  # noqa
 
 from alembic import context
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import engine_from_config, pool, create_engine
 from logging.config import fileConfig
 from content.models import User, Article, Comment
 
@@ -33,6 +33,14 @@ target_metadata = [
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+def get_url():
+    return "postgresql://%s:%s@%s/%s" % (
+        os.getenv("DATABASE_USERNAME", "postgres"),
+        os.getenv("DATABASE_PASSWORD", "postgres"),
+        os.getenv("DATABASE_HOST", "localhost"),
+        os.getenv("DATABASE_NAME", "octoberry_development"),
+    )
+
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
@@ -46,7 +54,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = get_url()
     context.configure(
         url=url, target_metadata=target_metadata, literal_binds=True)
 
@@ -61,10 +69,13 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
-        prefix='sqlalchemy.',
-        poolclass=pool.NullPool)
+
+    connectable = create_engine(get_url())
+
+    # connectable = engine_from_config(
+    #     config.get_section(config.config_ini_section),
+    #     prefix='sqlalchemy.',
+    #     poolclass=pool.NullPool)
 
     with connectable.connect() as connection:
         context.configure(

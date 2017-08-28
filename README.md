@@ -19,8 +19,10 @@ run server: `adev runserver main.py`
 
 ## Dockerization
 
-1. `docker-compose run web` - Install project at first
+1. create network: `docker network create testoctoberry`
 1. `docker-compose up` - rerun application
+1. open console for db and run commands from `bit/install_db.sh` for create a new db
+1. open consolse for `test-octoberry-api` and run `alembic upgrade head` to migrate
 
 ### New site
 
