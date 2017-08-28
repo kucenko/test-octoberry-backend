@@ -34,4 +34,4 @@ Run shell from `db` container and run commands from '`bin/install_db.sh`
 
 ### Migration
 
-Run shell from `web-api` and migration all from alembic
+Run shell from `web-api` and run migration: `alembic upgrade head`
