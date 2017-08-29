@@ -5,6 +5,8 @@ import aiohttp_transmute
     paths="/ping"
 )
 async def ping_get_view(request) -> str:
-    "Healthcheck"
+    """
+    Healthcheck
+    """
 
     return 'pong'

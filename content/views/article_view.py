@@ -20,7 +20,9 @@ COMMENT_SELECT = select([Comment, User], use_labels=True).select_from(JOINT_USER
     paths="/articles"
 )
 async def article_get_list_view(request) -> ListType(ModelType(ArticleDetailSerializer)):
-    "Get article list"
+    """
+    Get article list
+    """
 
     async with request.app['db'].acquire() as conn:
         result = await conn.execute(ARTICLE_SELECT)
@@ -40,7 +42,9 @@ async def article_get_list_view(request) -> ListType(ModelType(ArticleDetailSeri
     paths="/articles/{article_id}"
 )
 async def article_get_view(request, article_id: int) -> ArticleDetailSerializer:
-    "Get one article"
+    """
+    Get one article
+    """
 
     async with request.app['db'].acquire() as conn:
         result = await conn.execute(ARTICLE_SELECT.where(Article.c.id == article_id))
@@ -59,7 +63,9 @@ async def article_get_view(request, article_id: int) -> ArticleDetailSerializer:
     methods="POST"
 )
 async def article_add_view(request, title: str, text: str, user_id: int) -> ArticleDetailSerializer:
-    "Add new article"
+    """
+    Add new article
+    """
 
     async with request.app['db'].acquire() as conn:
         article_id = await conn.scalar(

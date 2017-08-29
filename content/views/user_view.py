@@ -12,7 +12,9 @@ from ..models import User
     paths="/users",
 )
 async def user_get_list_view(request) -> ListType(ModelType(UserSerializer)):
-    "Get all users. Development"
+    """
+    Get all users. Development
+    """
 
     async with request.app['db'].acquire() as conn:
         result = await conn.execute(select([User], use_labels=True))
@@ -25,7 +27,9 @@ async def user_get_list_view(request) -> ListType(ModelType(UserSerializer)):
     methods="POST"
 )
 async def user_add_view(request, name: str) -> UserSerializer:
-    "Add new user"
+    """
+    Add new user
+    """
 
     async with request.app['db'].acquire() as conn:
         user_id = await conn.scalar(
@@ -37,10 +41,12 @@ async def user_add_view(request, name: str) -> UserSerializer:
 
 @aiohttp_transmute.describe(
     paths="/users/{user_id}",
-    methods="POST"
+    methods="PUT"
 )
 async def user_edit_view(request, name: str, user_id: int) -> UserSerializer:
-    "Edit user"
+    """
+    Edit user
+    """
 
     async with request.app['db'].acquire() as conn:
         await conn.execute(

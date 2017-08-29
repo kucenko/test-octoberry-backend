@@ -18,7 +18,9 @@ COMMENT_SELECT = select([Comment, User], use_labels=True).select_from(JOINT_USER
     paths="/comments"
 )
 async def comment_get_list_view(request, user_id: int=None) -> ListType(ModelType(CommentSerializer)):
-    "Get list of comments"
+    """
+    Get list of comments
+    """
 
     async with request.app['db'].acquire() as conn:
         query = COMMENT_SELECT
@@ -36,7 +38,9 @@ async def comment_get_list_view(request, user_id: int=None) -> ListType(ModelTyp
     methods="POST"
 )
 async def comment_add_view(request, text: str, user_id: int, article_id: int) -> CommentSerializer:
-    "Add new comment"
+    """
+    Add new comment
+    """
 
     async with request.app['db'].acquire() as conn:
         comment_id = await conn.scalar(
@@ -52,10 +56,12 @@ async def comment_add_view(request, text: str, user_id: int, article_id: int) ->
 
 @aiohttp_transmute.describe(
     paths="/comments/{comment_id}",
-    methods="POST"
+    methods="PUT"
 )
 async def comment_edit_view(request, text: str, comment_id: int) -> CommentSerializer:
-    "Edit comment"
+    """
+    Edit comment
+    """
 
     async with request.app['db'].acquire() as conn:
         await conn.execute(
