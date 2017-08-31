@@ -21,7 +21,7 @@ run server: `adev runserver main.py`
 
 ### First build or rebuild
 
-Run command for first builds:
+Run commands for first build:
 
 1. create network: `docker network create testoctoberry`
 1. build application: `docker-compose up`
