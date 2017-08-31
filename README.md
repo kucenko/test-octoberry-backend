@@ -13,25 +13,31 @@
 
 ## Run server
 
-[DevTool](https://github.com/aio-libs/aiohttp-devtools#runserver)
+Powered by [DevTool](https://github.com/aio-libs/aiohttp-devtools#runserver)
 
 run server: `adev runserver main.py`
 
 ## Dockerization
 
+### First build or rebuild
+
+Run command for first builds:
+
 1. create network: `docker network create testoctoberry`
-1. `docker-compose up` - rerun application
-1. open console for db and run commands from `bit/install_db.sh` for create a new db
-1. open consolse for `test-octoberry-api` and run `alembic upgrade head` to migrate
+1. build application: `docker-compose up`
 
-### New site
+Or rebuild:
 
-To fin api go to the [site](http://localhost:8001/api/doc)
+1. build application: `docker-compose up --build`
 
-### Install db
+### Configuration project
 
-Run shell from `db` container and run commands from '`bin/install_db.sh`
+1. run migration (required at first build): `docker-compose run api alembic upgrade head`
 
-### Migration
+### Start docker without build
 
-Run shell from `web-api` and run migration: `alembic upgrade head`
+1. run application: `docker-compose up`
+
+### Where I can find project
+
+Api documentation will be on the page [http://localhost:8000/api/doc](http://localhost:8000/api/doc)
