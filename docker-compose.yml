@@ -9,6 +9,8 @@ services:
       - DATABASE_NAME=octoberry_production
       - DATABASE_USERNAME=octoberry
       - DATABASE_PASSWORD=octoberry
+    volumes:
+      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
   api:
     build: .
     command: gunicorn -w 4 main:app --bind 0.0.0.0:8000 --worker-class aiohttp.worker.GunicornWebWorker
