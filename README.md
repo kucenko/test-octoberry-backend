@@ -24,6 +24,12 @@ run server: `adev runserver main.py`
 1. open console for db and run commands from `bit/install_db.sh` for create a new db
 1. open consolse for `test-octoberry-api` and run `alembic upgrade head` to migrate
 
+### new version
+
+1. create network: `docker network create testoctoberry`
+1. `docker-compose build` - build application
+1. `docker-compose run api alembic upgrade head` run migration
+
 ### New site
 
 To fin api go to the [site](http://localhost:8001/api/doc)
